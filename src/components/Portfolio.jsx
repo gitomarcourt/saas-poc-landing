@@ -149,11 +149,11 @@ const Portfolio = () => {
   };
 
   return (
-    <section id="portfolio" className={`bg-gray-900 ${location.pathname === '/portfolio' ? 'pt-32' : 'pt-16'} pb-16`} ref={ref}>
+    <section id="portfolio" className={`bg-gray-900 ${location.pathname === '/portfolio' ? 'pt-32 pb-16' : ''}`} ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-20"
+          className={`text-center ${location.pathname === '/portfolio' ? 'mb-20' : 'mb-12'}`}
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -308,19 +308,21 @@ const Portfolio = () => {
 
         {/* CTA Section */}
         <motion.div
-          className="text-center"
+          className="text-center mt-12"
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          <h3 className="text-2xl font-bold mb-6 text-white">
+          <h3 className="text-2xl font-bold mb-4 text-white">
             Vous avez un projet similaire ?
           </h3>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Nous pouvons vous aider à le réaliser. Contactez-nous pour discuter
-            de vos besoins et obtenir un devis personnalisé.
+          <p className="text-gray-400 mb-8">
+            Nous pouvons vous aider à le réaliser. Contactez-nous pour discuter de vos besoins et obtenir un devis personnalisé.
           </p>
-          <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-secondary to-accent text-white font-semibold hover:opacity-90 transition-opacity duration-200">
+          <button
+            onClick={() => navigate('/get-started')}
+            className="btn-primary"
+          >
             Démarrer votre projet
           </button>
         </motion.div>

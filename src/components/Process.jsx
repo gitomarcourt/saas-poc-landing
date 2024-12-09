@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   LightBulbIcon,
   PencilSquareIcon,
@@ -114,10 +114,13 @@ const deliverables = [
 
 const Process = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const isFullPage = location.pathname === '/process';
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -131,12 +134,14 @@ const Process = () => {
     }
   };
 
+  const displayedSteps = isFullPage ? mainSteps : mainSteps.slice(0, 4);
+
   return (
-    <section id="process" className={`bg-gray-900 ${location.pathname === '/process' ? 'pt-32' : 'pt-16'} pb-16`} ref={ref}>
+    <section id="process" className={`bg-gray-900 ${isFullPage ? 'pt-32 pb-16' : ''}`} ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-20"
+          className={`text-center ${isFullPage ? 'mb-20' : 'mb-12'}`}
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
@@ -145,8 +150,10 @@ const Process = () => {
             Notre Processus
           </h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Une méthodologie éprouvée pour transformer votre idée en réalité,
-            avec un focus sur la rapidité et la qualité.
+            {isFullPage 
+              ? "Une méthodologie éprouvée pour transformer votre idée en réalité, avec un focus sur la rapidité et la qualité."
+              : "Un processus simple et efficace pour concrétiser votre projet."
+            }
           </p>
         </motion.div>
 
@@ -158,7 +165,7 @@ const Process = () => {
           animate={inView ? "visible" : "hidden"}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {mainSteps.map((step, index) => (
+            {displayedSteps.map((step, index) => (
               <motion.div
                 key={index}
                 className="bg-gray-800/50 backdrop-blur-xl rounded-xl p-6 border border-gray-700/50 hover:border-secondary/50 transition-all duration-300"
@@ -174,84 +181,90 @@ const Process = () => {
                   <span className="text-lg font-semibold text-white">{step.title}</span>
                 </div>
                 <p className="text-gray-400 mb-4">{step.description}</p>
-                <ul className="space-y-2">
-                  {step.details.map((detail, detailIndex) => (
-                    <li key={detailIndex} className="flex items-center text-gray-300">
-                      <svg className="w-4 h-4 text-secondary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
+                {isFullPage && (
+                  <ul className="space-y-2">
+                    {step.details.map((detail, detailIndex) => (
+                      <li key={detailIndex} className="flex items-center text-gray-300">
+                        <svg className="w-4 h-4 text-secondary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Methodology Section */}
-        <motion.div
-          className="mb-20"
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-        >
-          <h3 className="text-3xl font-bold text-center mb-12 text-white">
-            Notre Méthodologie
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {methodology.map((item, index) => (
-              <motion.div
-                key={index}
-                className="bg-gray-800/30 rounded-xl p-6 border border-gray-700/30"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-              >
-                <item.icon className="w-10 h-10 text-accent mb-4" />
-                <h4 className="text-lg font-semibold mb-2 text-white">{item.title}</h4>
-                <p className="text-gray-400">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        {/* Methodology Section - Only shown on full page */}
+        {isFullPage && (
+          <motion.div
+            className="mb-20"
+            variants={containerVariants}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+          >
+            <h3 className="text-3xl font-bold text-center mb-12 text-white">
+              Notre Méthodologie
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {methodology.map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-gray-800/30 rounded-xl p-6"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                >
+                  <item.icon className="w-10 h-10 text-accent mb-4" />
+                  <h4 className="text-lg font-semibold mb-2 text-white">{item.title}</h4>
+                  <p className="text-gray-400">{item.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
-        {/* Deliverables Section */}
-        <motion.div
-          className="mb-20"
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-        >
-          <h3 className="text-3xl font-bold text-center mb-12 text-white">
-            Livrables
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {deliverables.map((category, index) => (
-              <motion.div
-                key={index}
-                className="bg-gray-800/50 backdrop-blur-xl rounded-xl p-6 border border-gray-700/50"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-              >
-                <h4 className="text-xl font-semibold mb-4 text-white">{category.title}</h4>
-                <ul className="space-y-3">
-                  {category.items.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-center text-gray-300">
-                      <svg className="w-5 h-5 text-secondary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        {/* Deliverables Section - Only shown on full page */}
+        {isFullPage && (
+          <motion.div
+            className="mb-20"
+            variants={containerVariants}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+          >
+            <h3 className="text-3xl font-bold text-center mb-12 text-white">
+              Livrables
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {deliverables.map((deliverable, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-gray-800/30 rounded-xl p-6"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                >
+                  <h4 className="text-xl font-semibold mb-4 text-white">{deliverable.title}</h4>
+                  <ul className="space-y-2">
+                    {deliverable.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-center text-gray-300">
+                        <svg className="w-4 h-4 text-accent mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* CTA Section */}
         <motion.div
@@ -260,16 +273,26 @@ const Process = () => {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          <h3 className="text-2xl font-bold mb-6 text-white">
-            Prêt à commencer votre projet ?
-          </h3>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Notre équipe est prête à vous accompagner dans la réalisation de votre projet.
-            Contactez-nous pour démarrer la discussion.
-          </p>
-          <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-secondary to-accent text-white font-semibold hover:opacity-90 transition-opacity duration-200">
-            Commencer maintenant
-          </button>
+          {!isFullPage ? (
+            <button
+              onClick={() => navigate('/process')}
+              className="btn-primary"
+            >
+              En savoir plus sur notre processus
+            </button>
+          ) : (
+            <div>
+              <h3 className="text-2xl font-bold mb-6 text-white">
+                Prêt à démarrer votre projet ?
+              </h3>
+              <button
+                onClick={() => navigate('/get-started')}
+                className="btn-primary"
+              >
+                Commencer maintenant
+              </button>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

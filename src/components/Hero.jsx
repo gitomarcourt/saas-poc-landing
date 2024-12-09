@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  const navigate = useNavigate();
 
   return (
     <section className="relative bg-gray-900 overflow-hidden">
@@ -106,7 +108,10 @@ const Hero = () => {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.8 }}
               >
-                <button className="btn-primary group">
+                <button 
+                  className="btn-primary group"
+                  onClick={() => navigate('/get-started')}
+                >
                   <span className="flex items-center">
                     Commencer maintenant
                     <motion.svg 

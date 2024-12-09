@@ -10,7 +10,7 @@ const Contact = () => {
   });
 
   return (
-    <section id="contact" className={`bg-gray-900 ${location.pathname === '/contact' ? 'pt-32' : 'pt-16'} pb-16`}>
+    <section id="contact" className={`bg-gray-900 ${location.pathname === '/contact' ? 'pt-32 pb-16' : ''}`}>
       {/* Background decoration */}
       <motion.div
         className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/20 rounded-full blur-[100px]"
@@ -25,40 +25,41 @@ const Contact = () => {
         }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
+            ref={ref}
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <motion.h2 
               className="heading-lg mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             >
-              Prêt à{' '}
+              Avez-vous{' '}
               <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
-                concrétiser
+                une question
               </span>{' '}
-              votre projet ?
+              ou besoin d'aide ?
             </motion.h2>
             <motion.p 
               className="text-gray-300 text-lg mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
             >
-              Contactez-nous dès aujourd'hui pour discuter de votre projet et 
-              obtenir un POC fonctionnel en une semaine.
+              Notre équipe de support est là pour vous aider. Que ce soit pour une question technique,
+              un conseil ou une assistance, nous vous répondrons dans les plus brefs délais.
             </motion.p>
 
             <motion.div
               className="space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.6 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center">
@@ -86,35 +87,26 @@ const Contact = () => {
             </motion.div>
           </motion.div>
 
-          <motion.div
+          <motion.div 
+            className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-8 shadow-xl"
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-8"
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
             <form className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Nom complet
+                <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                  Sujet
                 </label>
-                <input
-                  type="text"
-                  id="name"
+                <select
+                  id="subject"
                   className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:border-secondary transition-colors duration-300"
-                  placeholder="John Doe"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:border-secondary transition-colors duration-300"
-                  placeholder="john@example.com"
-                />
+                >
+                  <option value="support">Support technique</option>
+                  <option value="question">Question générale</option>
+                  <option value="bug">Signaler un bug</option>
+                  <option value="other">Autre</option>
+                </select>
               </div>
 
               <div>
@@ -125,7 +117,7 @@ const Contact = () => {
                   id="message"
                   rows={4}
                   className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg focus:outline-none focus:border-secondary transition-colors duration-300"
-                  placeholder="Décrivez votre projet..."
+                  placeholder="Décrivez votre question ou le problème rencontré..."
                 />
               </div>
 
@@ -133,7 +125,7 @@ const Contact = () => {
                 type="submit"
                 className="w-full btn-primary"
               >
-                Envoyer le message
+                Envoyer
               </button>
             </form>
           </motion.div>

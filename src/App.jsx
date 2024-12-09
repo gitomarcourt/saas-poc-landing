@@ -15,13 +15,15 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={
-            <>
-              <Hero />
-              <Features />
-              <Process />
-              <Portfolio />
-              <Contact />
-            </>
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-32">
+              <div className="space-y-20 md:space-y-32">
+                <Hero />
+                <Features />
+                <Process />
+                <Portfolio />
+                <Contact />
+              </div>
+            </main>
           } />
           <Route path="/services" element={<Features />} />
           <Route path="/process" element={<Process />} />
