@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useLocation } from 'react-router-dom';
 
 const projects = [
   {
@@ -23,13 +24,14 @@ const projects = [
 ];
 
 const Portfolio = () => {
+  const location = useLocation();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <section id="portfolio" className="section-padding bg-primary/50" ref={ref}>
+    <section id="portfolio" className={`bg-gray-900 ${location.pathname === '/portfolio' ? 'pt-32' : 'pt-16'} pb-16`} ref={ref}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-20"

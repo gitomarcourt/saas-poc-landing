@@ -6,6 +6,7 @@ import {
   UserGroupIcon,
   RocketLaunchIcon
 } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/router';
 
 const features = [
   {
@@ -31,6 +32,7 @@ const features = [
 ];
 
 const Features = () => {
+  const router = useRouter();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -51,7 +53,7 @@ const Features = () => {
   };
 
   return (
-    <section id="features" className="section-padding bg-gradient-to-b from-primary to-primary/50" ref={ref}>
+    <section id="features" className={`bg-gray-900 ${router.pathname === '/services' ? 'pt-32' : 'pt-16'} pb-16`} ref={ref}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-20"

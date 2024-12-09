@@ -12,7 +12,7 @@ const Hero = () => {
       {/* Background pattern */}
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       
-      <div className="relative container mx-auto px-4 pt-24 pb-16">
+      <div className="relative container mx-auto px-4 pt-32 pb-16">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12">
           {/* Left side with text */}
           <div className="lg:w-1/2 lg:pr-8 mb-12 lg:mb-0">

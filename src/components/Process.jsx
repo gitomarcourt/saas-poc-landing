@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useLocation } from 'react-router-dom';
 
 const steps = [
   {
@@ -25,13 +26,14 @@ const steps = [
 ];
 
 const Process = () => {
+  const location = useLocation();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <section id="process" className="section-padding bg-primary relative overflow-hidden" ref={ref}>
+    <section id="process" className={`bg-gray-900 ${location.pathname === '/process' ? 'pt-32' : 'pt-16'} pb-16`} ref={ref}>
       {/* Animated background element */}
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-secondary/20 rounded-full blur-[120px]"

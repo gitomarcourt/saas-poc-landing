@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useLocation } from 'react-router-dom';
 
 const Contact = () => {
+  const location = useLocation();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <section id="contact" className="section-padding bg-primary relative overflow-hidden" ref={ref}>
+    <section id="contact" className={`bg-gray-900 ${location.pathname === '/contact' ? 'pt-32' : 'pt-16'} pb-16`}>
       {/* Background decoration */}
       <motion.div
         className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/20 rounded-full blur-[100px]"

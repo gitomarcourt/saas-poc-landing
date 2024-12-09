@@ -1,21 +1,29 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Process from './components/Process';
+import Portfolio from './components/Portfolio';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import Process from './pages/Process';
-import Portfolio from './pages/Portfolio';
-import Contact from './pages/Contact';
-import GetStarted from './pages/GetStarted';
+import GetStarted from './components/GetStarted';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-primary text-white">
+      <div className="min-h-screen bg-gray-900 text-white">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
+          <Route path="/" element={
+            <>
+              <Hero />
+              <Features />
+              <Process />
+              <Portfolio />
+              <Contact />
+            </>
+          } />
+          <Route path="/services" element={<Features />} />
           <Route path="/process" element={<Process />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/contact" element={<Contact />} />
