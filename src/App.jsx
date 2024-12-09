@@ -7,10 +7,12 @@ import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import GetStarted from './components/GetStarted';
+import { useScrollToTop } from './hooks/useScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-gray-900 text-white">
         <Navbar />
         <Routes>
@@ -35,6 +37,12 @@ function App() {
       </div>
     </Router>
   );
+}
+
+// Composant pour gérer le scroll
+function ScrollToTop() {
+  useScrollToTop();
+  return null;
 }
 
 export default App;

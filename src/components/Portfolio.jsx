@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { 
   GlobeAltIcon, 
   ShoppingCartIcon, 
@@ -125,6 +125,7 @@ const categories = [
 
 const Portfolio = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
