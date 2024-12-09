@@ -12,7 +12,7 @@ const Footer = () => {
               <span className="text-3xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
                 POC
               </span>
-              <div className="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center transform -skew-x-12">
+              <div className="w-8 h-8 bg-gradient-to-r from-secondary to-accent rounded-lg flex items-center justify-center transform -skew-x-12">
                 <span className="text-2xl font-black text-white transform skew-x-12">7</span>
               </div>
             </div>
